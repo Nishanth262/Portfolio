@@ -37,6 +37,11 @@ const programmingLanguages: Skill[] = [
     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
     description: "Dynamic programming language used for interactive web development.",
   },
+  {
+    name: "React",
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+    description: "A JavaScript library for building user interfaces, maintained by Facebook.",
+  },
 ];
 
 const tools: Skill[] = [
@@ -54,6 +59,16 @@ const tools: Skill[] = [
     name: "Arduino",
     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg",
     description: "Open-source electronics platform for building digital devices.",
+  },
+  {
+    name: "Visual Studio",
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg",
+    description: "Integrated development environment from Microsoft.",
+  },
+  {
+    name: "Eclipse",
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/eclipse/eclipse-original.svg",
+    description: "Popular open-source IDE primarily for Java development.",
   },
 ];
 
