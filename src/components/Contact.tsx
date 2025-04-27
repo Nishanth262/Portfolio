@@ -5,8 +5,10 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -17,42 +19,32 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-      const payload = {
-      name: formData.name,
-      email: formData.email,
-      message: formData.message,
-      };
-
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+  
     try {
-      const response = await fetch(
-        'https://script.google.com/macros/s/AKfycbzqveFm53-1FtHzvtIPWMzMw4_X_LBHzQatPqQc028GU9mXRLuJzv1-VQYOEPmNPArB/exec',
-        {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-  
-        }
-      );
+      // Use a proxy or modify the request
+      const response = await fetch('https://script.google.com/macros/s/AKfycbzFTKWOwfdy203US7CnYUXCU4tghOoMqnRJsAkIy43f0Yv8F8NGPYijYu4aXqQgFFLV/exec', {
+        method: 'POST',
+        mode: 'no-cors', // Important change
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+    // With no-cors mode, you won't be able to read the response
+    // So we'll assume success if the request completes
+    setSubmitStatus('success');
+    setFormData({ name: '', email: '', message: '' });
+  } catch (error) {
+    console.error('Submission error:', error);
+    setSubmitStatus('error');
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
-      const result = await response.text();
-      console.log('Success:', result);
 
-      if (response.ok) {
-        alert('Message sent successfully!');
-        setFormData({ name: '', email: '', message: '' });
-      } else {
-        alert('Something went wrong. Please try again.');
-      }
-    } catch (error) {
-      console.error('Error!', error);
-      alert('There was an error sending your message.');
-    }
-  };
-  
   return (
     <section id="contact" className="py-20 bg-gray-50 dark:bg-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -139,7 +131,7 @@ const Contact = () => {
               </h3>
               
               <div className="flex space-x-4">
-                <a 
+              <a 
                   href="https://x.com/NishanthGowdaRS" 
                   target="_blank" 
                   rel="noopener noreferrer"
@@ -150,9 +142,20 @@ const Contact = () => {
                     <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
                   </svg>
                 </a>
+                <a 
+                  href="https://www.instagram.com/nishanth._.gowda_07/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="bg-blue-500 dark:bg-blue-700 p-3 rounded-full hover:bg-blue-600 transition"
+                  aria-label="Instagram"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5A4.25 4.25 0 003.5 7.75v8.5A4.25 4.25 0 007.75 20.5h8.5a4.25 4.25 0 004.25-4.25v-8.5A4.25 4.25 0 0016.25 3.5h-8.5zm8.75 2a1 1 0 110 2 1 1 0 010-2zM12 7a5 5 0 110 10 5 5 0 010-10zm0 1.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z" />
+                  </svg>
+                </a>
                 
                 <a 
-                  href="https://www.linkedin.com/in/Nishanth-gowda-r-s-47590822a/" 
+                  href="https://www.linkedin.com/in/nishanth-gowda-r-s-47590822a/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="bg-blue-500 dark:bg-blue-700 p-3 rounded-full hover:bg-blue-600 transition"
@@ -236,12 +239,34 @@ const Contact = () => {
               <div>
                 <button
                   type="submit"
-                  className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
+                  disabled={isSubmitting}
+                  className={`w-full px-6 py-3 ${isSubmitting ? 'bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'} text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2`}
                 >
-                  <span>Send Message</span>
-                  <Send size={18} />
+                  {isSubmitting ? (
+                    <>
+                      <span>Sending...</span>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                    </>
+                  ) : (
+                    <>
+                      <span>Send Message</span>
+                      <Send size={18} />
+                    </>
+                  )}
                 </button>
               </div>
+
+              {submitStatus === 'success' && (
+                <div className="p-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800">
+                  Message sent successfully!
+                </div>
+              )}
+
+              {submitStatus === 'error' && (
+                <div className="p-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800">
+                  Failed to send message. Please try again later.
+                </div>
+              )}
             </form>
           </div>
         </div>
