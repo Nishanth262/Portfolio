@@ -18,12 +18,12 @@ const Footer = () => {
           </div>
           
           <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8">
-            <a href="Nishanthhome" className="text-gray-300 hover:text-white transition-colors">Home</a>
-            <a href="Nishanthabout" className="text-gray-300 hover:text-white transition-colors">About</a>
-            <a href="Nishanthskills" className="text-gray-300 hover:text-white transition-colors">Skills</a>
-            <a href="Nishanthprojects" className="text-gray-300 hover:text-white transition-colors">Projects</a>
-            <a href="Nishanthexperience" className="text-gray-300 hover:text-white transition-colors">Experience</a>
-            <a href="Nishanthcontact" className="text-gray-300 hover:text-white transition-colors">Contact</a>
+            <a href="#home" className="text-gray-300 hover:text-white transition-colors">Home</a>
+            <a href="#about" className="text-gray-300 hover:text-white transition-colors">About</a>
+            <a href="#skills" className="text-gray-300 hover:text-white transition-colors">Skills</a>
+            <a href="#projects" className="text-gray-300 hover:text-white transition-colors">Projects</a>
+            <a href="#experience" className="text-gray-300 hover:text-white transition-colors">Experience</a>
+            <a href="#contact" className="text-gray-300 hover:text-white transition-colors">Contact</a>
           </div>
           
           <button 
