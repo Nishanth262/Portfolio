@@ -55,7 +55,7 @@ const Hero = () => {
                   <img 
                     src="https://avatars.githubusercontent.com/u/183916565?s=400&u=f153d7bf767eb6c97e634bfd6b6dd7214e4a0585&v=4" 
                     alt="Profile" 
-                    className="w-full h-auto rounded-2xl transform transition duration-500 hover:scale-105"
+                    className="w-full h-auto rounded-2x2 transform transition duration-500 hover:scale-105"
                   />
                 </div>
               </div>
